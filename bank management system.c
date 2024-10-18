@@ -341,7 +341,7 @@ void see(void)
     FILE *ptr;
     int test=0,rate;
     int choice;
-    char entered_password;
+    char entered_password[20];
     float time;
     float intrst;
     ptr=fopen("record.dat","r");
@@ -357,7 +357,7 @@ void see(void)
         {
             if(add.acc_no==check.acc_no)
             {   printf("Enter password");
-                scanf("%d",&entered_password);
+                scanf("%s", entered_password);
 
                  if (strcmp(add.password, entered_password) == 0){
                     system("cls");
