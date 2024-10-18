@@ -20,6 +20,7 @@ struct {
     struct date dob;
     struct date deposit;
     struct date withdraw;
+    char password[20];
 
     }add,upd,check,rem,transaction;
 
@@ -77,7 +78,10 @@ void new_acc()
     printf("\nType of account:\n\t#Saving\n\t#Current\n\t#Fixed1(for 1 year)\n\t#Fixed2(for 2 years)\n\t#Fixed3(for 3 years)\n\n\tEnter your choice:");
     scanf("%s",add.acc_type);
 
-        fprintf(ptr,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.acc_no,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,add.citizenship,add.phone,add.acc_type,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
+    printf("Create a password for the account: ");
+    scanf("%s", add.password);
+
+        fprintf(ptr,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d/%s\n",add.acc_no,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,add.citizenship,add.phone,add.acc_type,add.amt,add.deposit.month,add.deposit.day,add.deposit.year,add.password);
 
 
     fclose(ptr);
@@ -337,6 +341,7 @@ void see(void)
     FILE *ptr;
     int test=0,rate;
     int choice;
+    char entered_password;
     float time;
     float intrst;
     ptr=fopen("record.dat","r");
@@ -346,11 +351,17 @@ void see(void)
     {   printf("Enter the account number:");
         scanf("%d",&check.acc_no);
 
+        
+
         while (fscanf(ptr,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d",&add.acc_no,add.name,&add.dob.month,&add.dob.day,&add.dob.year,&add.age,add.address,add.citizenship,&add.phone,add.acc_type,&add.amt,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
         {
             if(add.acc_no==check.acc_no)
-            {   system("cls");
-                test=1;
+            {   printf("Enter password");
+                scanf("%d",&entered_password);
+
+                 if (strcmp(add.password, entered_password) == 0){
+                    system("cls");
+                    test=1;
 
                 printf("\nAccount NO.:%d\nName:%s \nDOB:%d/%d/%d \nAge:%d \nAddress:%s \nCitizenship No:%s \nPhone number:%.0lf \nType Of Account:%s \nAmount deposited:$ %.2f \nDate Of Deposit:%d/%d/%d\n\n",add.acc_no,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,add.citizenship,add.phone,
                 add.acc_type,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
@@ -392,6 +403,7 @@ void see(void)
 
                      }
 
+                 }
             }
         }
     }
